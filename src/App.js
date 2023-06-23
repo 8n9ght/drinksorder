@@ -1,0 +1,29 @@
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./components/home";
+import Menu from "./components/menu";
+import Admin from "./components/admin";
+import Cocktails from "./components/categories/cocktails";
+import Mocktails from "./components/categories/mocktails";
+import Spirits from "./components/categories/spirits";
+import Shots from "./components/categories/shots";
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/menu' element={<Menu />}></Route>
+          <Route path='/admin' element={<Admin />}></Route>
+          <Route path='/cocktails' element={<Cocktails />}></Route>
+          <Route path='/mocktails' element={<Mocktails />}></Route>
+          <Route path='/spirits' element={<Spirits />}></Route>
+          <Route path='/shots' element={<Shots />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
