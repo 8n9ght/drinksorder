@@ -21,13 +21,7 @@ function Spirits() {
           return(
             <div className="drinkItem">
               <p className="drinkName">{drink.name}</p>
-              <article className='drinkIngredients'>
-                {drink.ingredients.map((igd) => {
-                  return(
-                    <p>{igd}</p>
-                  )
-                })}
-              </article>
+              {drink.available === true ? <p>Disponible</p> : <p>En rupture</p>}
             </div>
           )
         })}
