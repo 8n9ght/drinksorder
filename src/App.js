@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./components/home";
 import Menu from "./components/menu";
-import Admin from "./components/admin/admin";
+import Admin from "./components/admin/adminHome";
 import Cocktails from "./components/categories/cocktails";
 import Mocktails from "./components/categories/mocktails";
 import Spirits from "./components/categories/spirits";
