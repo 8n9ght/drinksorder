@@ -2,11 +2,14 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./components/home";
 import Menu from "./components/menu";
-import Admin from "./components/admin";
+import Admin from "./components/admin/admin";
 import Cocktails from "./components/categories/cocktails";
 import Mocktails from "./components/categories/mocktails";
 import Spirits from "./components/categories/spirits";
 import Shots from "./components/categories/shots";
+import AdminMenu from './components/admin/adminMenu';
+import DrinkManagement from './components/admin/drinkManagement';
+import AddDrink from './components/admin/addDrink';
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
           <Route path='/mocktails' element={<Mocktails />}></Route>
           <Route path='/spirits' element={<Spirits />}></Route>
           <Route path='/shots' element={<Shots />}></Route>
+          <Route path='/admin' element={<Admin />}></Route>
+          <Route path='/adminmenu' element={<AdminMenu />}></Route>
+          <Route path='/adddrink' element={<AddDrink />}></Route>
+          <Route path='/drinkmanagement' element={<DrinkManagement />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

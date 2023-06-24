@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 function Mocktails() {
     const [drinks, setDrinks] = useState([])
@@ -13,18 +14,19 @@ function Mocktails() {
   return (
     <div className="container">
       <header>
+        <Link to="/menu" className="back">Back</Link>
         <h1>Mocktails</h1>
       </header>
 
       <div className="drinks">
         {drinks.map((drink) => {
           return(
-            <div className="drinkItem">
+            <div className="drinkItem" key={drink.name}>
               <p className="drinkName">{drink.name}</p>
               <article className='drinkIngredients'>
                 {drink.ingredients.map((igd) => {
                   return(
-                    <p>{igd}</p>
+                    <p key={Math.random()}>{igd}</p>
                   )
                 })}
               </article>
