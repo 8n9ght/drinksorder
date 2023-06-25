@@ -125,3 +125,87 @@ button{
   gap: 1rem;
 }
 
+.logMessage{
+  color: #fff;
+}
+
+.beverages{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.beverageItem{
+  background: #fff;
+  border-radius: .25rem;
+  padding: .25rem .5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.beverageItem h2{
+  color: #0ac39e;
+  font-size: 1rem;
+}
+
+.beverageIngredients{
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.btnManagement{
+  display: flex;
+  position: absolute;
+  gap: .5rem;
+  right: -.5rem;
+  top: -1rem;
+}
+
+.beverageItem button{
+  width: auto;
+  padding: .25rem .5rem;
+}
+
+#confirmDelete{
+  background: rgba(11, 15, 15, 0.98);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: #0ac39e;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: .5rem .5rem 0;
+  gap: 3rem;
+}
+
+.hidden{
+  display: none !important;
+}
+
+.popupHeader{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  color: #fff;
+}
+
+.popupBtn{
+  display: flex;
+  gap: 2rem;
+}
+
+.popupTitle{
+  text-transform: uppercase;
+}
+
+.popupBtn button{
+  padding: .25rem .5rem;
+}
+
+
+

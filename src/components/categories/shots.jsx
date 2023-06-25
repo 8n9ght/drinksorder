@@ -5,12 +5,22 @@ import { Link } from "react-router-dom";
 function Shots() {
     const [drinks, setDrinks] = useState([])
 
+    let apiUrl;
+  
+    if (process.env.NODE_ENV === "development") {
+        apiUrl = 'http://localhost:5000/shots/';
+    } else {
+        apiUrl = 'https://ineedadrink.onrender.com/shots/';
+    }
+
     useEffect(() => {
-        axios.get("https://ineedadrink.onrender.com/shots")
+        axios.get(apiUrl, { withCredentials: true })
         .then((res) => {
             setDrinks(res.data)
-        }, [])
-    })
+            console.log(res)
+        })
+    }, [])
+
   return (
     <div className="container">
       <header>

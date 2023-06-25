@@ -1,37 +1,145 @@
+import React, { useState } from "react";
 import axios from "axios";
 
 const AddDrink = () => {
 
-    axios.defaults.withCredentials = true;
-    
-    return (
-        <div className="container">
-            <header>
-                <h1>Add a new drink</h1>
-            </header>
+    let apiUrl;
 
-            <div className="addForm">
-                <label htmlFor="name">Nom</label>
-                <input type="text" max={10} name="name" id="name"></input>
+    if (process.env.NODE_ENV === "development") {
+        apiUrl = `http://localhost:5000/admin/new`;
+    } else {
+        apiUrl = `https://ineedadrink.onrender.com/admin/new`;
+    }
 
-                <label htmlFor="ingredients">Ingrédients</label>
-                <input type="text" max={10} name="ingredients" id="ingredients"></input>
+    const [formData, setFormData] = useState({
+        name: "",
+        ingredients: [],
+        category: "",
+        availability: true,
+    });
 
-                <label htmlFor="image">Photo</label>
-                <input type="file" name="image" id="image"></input>
+  const [imageFile, setImageFile] = useState(null);
+  const formDataWithImage = new FormData();
+  formDataWithImage.append("name", formData.name);
+  formDataWithImage.append("ingredients", JSON.stringify(formData.ingredients));
+  formDataWithImage.append("category", formData.category);
+  formDataWithImage.append("availability", formData.availability);
+  formDataWithImage.append("image", imageFile);
 
-                <div className="available">
-                    <label>Disponibilité</label>
-                    <label htmlFor="available">En stock</label>
-                    <input type="checkbox" name="available" id="available" value={true} />
-                    <label htmlFor="out">Rupture</label>
-                    <input type="checkbox" name="out" id="out" value={false} />
-                </div>
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-                <button>Add to the stach</button>
+  const handleIngredientChange = (index, e) => {
+    const updatedIngredients = [...formData.ingredients];
+    updatedIngredients[index] = e.target.value;
+    setFormData({ ...formData, ingredients: updatedIngredients });
+  };
+
+  const handleAddIngredient = () => {
+    setFormData({ ...formData, ingredients: [...formData.ingredients, ""] });
+  };
+
+  const handleRemoveIngredient = (index) => {
+    const updatedIngredients = [...formData.ingredients];
+    updatedIngredients.splice(index, 1);
+    setFormData({ ...formData, ingredients: updatedIngredients });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post(apiUrl, formData, { withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
+    .then((res) => {
+        console.log(res.data);
+        setFormData({
+            name: "",
+            ingredients: [],
+            category: "",
+            availability: true,
+        });
+        setImageFile(null);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  };
+
+  return (
+    <div className="container">
+      <header>
+        <h1>Add a new drink</h1>
+      </header>
+
+      <div className="addForm">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Nom</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+
+          <label htmlFor="ingredients">Ingrédients</label>
+          {formData.ingredients.map((ingredient, index) => (
+            <div key={index}>
+              <input
+                type="text"
+                name={`ingredient-${index}`}
+                id={`ingredient-${index}`}
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(index, e)}
+                required
+              />
+              <button type="button" onClick={() => handleRemoveIngredient(index)}>
+                X
+              </button>
             </div>
-        </div>
-    )
-}
+          ))}
+          <button type="button" onClick={handleAddIngredient}>
+            Ajouter un ingrédient
+          </button>
+
+          <label htmlFor="category">Catégorie</label>
+          <select
+            name="category"
+            id="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Sélectionnez une catégorie</option>
+            <option value="cocktails">Cocktails</option>
+            <option value="mocktails">Mocktails</option>
+            <option value="shots">Shots</option>
+            <option value="spirits">Spirits</option>
+          </select>
+
+          <label htmlFor="image">Photo</label>
+            <input type="file" name="image" id="image"
+            onChange={(e) => setImageFile(e.target.files[0])}
+            accept="image/*" />
+
+          <div className="available">
+            <label>Disponibilité</label>
+            <label htmlFor="availability">En stock</label>
+            <input
+              type="checkbox"
+              name="availability"
+              id="availability"
+              checked={formData.availability}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <button type="submit">Ajouter à la liste</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default AddDrink;

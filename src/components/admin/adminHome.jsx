@@ -11,6 +11,14 @@ const Admin = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
+    let apiUrl;
+  
+    if (process.env.NODE_ENV === "development") {
+        apiUrl = 'http://localhost:5000/admin/login';
+    } else {
+        apiUrl = 'https://ineedadrink.onrender.com/admin/login';
+    }
+
     const handleConnect = async (e) => {
         e.preventDefault();
         if (username === '' || password === '') {
@@ -18,14 +26,14 @@ const Admin = () => {
             return;
         }
         try {
-            const res = await axios.post('https://ineedadrink.onrender.com/admin/login', { username, password });
-            const token = res.data.token;
-            console.log(token);
-            navigate('/adminmenu')
-        } catch (err) {
-            console.error(err);
-            setMessage('Les informations entrées sont incorrectes');
-        }
+    const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
+    const token = res.data.token;
+    console.log(token);
+    navigate('/adminmenu');
+  } catch (err) {
+    console.error(err);
+    setMessage('Les informations entrées sont incorrectes');
+  }
     };
 
     return (
@@ -38,7 +46,7 @@ const Admin = () => {
                 <input type="text" max={10} value={username} onChange={e => setUsername(e.target.value)}></input>
                 <input type="password" max={10} value={password} onChange={e => setPassword(e.target.value)}></input>
                 <button onClick={handleConnect}>Go Hangover</button>
-                {message && <p>{message}</p>}
+                {message && <p className="logMessage">{message}</p>}
             </div>
 
             <Link to="/addadmin">New Drink Master</Link>
