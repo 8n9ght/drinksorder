@@ -8,8 +8,8 @@ const AdminMenu = () => {
             </header>
 
             <div className="menuLinks">
-                <Link to="/cocktails">Manage Drinks</Link>
-                <Link to="/mocktails">Add drinks</Link>
+                <Link to="/drinkmanagement">Manage Drinks</Link>
+                <Link to="/adddrink">Add drinks</Link>
             </div>
         </div>
     )
