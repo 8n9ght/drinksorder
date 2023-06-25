@@ -1,4 +1,9 @@
+import axios from "axios";
+
 const AddDrink = () => {
+
+    axios.defaults.withCredentials = true;
+    
     return (
         <div className="container">
             <header>

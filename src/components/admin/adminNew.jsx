@@ -4,6 +4,8 @@ import { useNavigate  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const AddAdmin = () => {
+    axios.defaults.withCredentials = true;
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [secretCode, setSecretCode] = useState('');

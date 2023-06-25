@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const DrinkManagement = () => {
 
     const [beverages, setBeverages] = useState()
+    axios.defaults.withCredentials = true;
 
 
     useEffect(() => {
