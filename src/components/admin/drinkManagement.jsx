@@ -5,16 +5,18 @@ const DrinkManagement = () => {
 
     const [beverages, setBeverages] = useState()
     axios.defaults.withCredentials = true;
-    axios.defaults.origin = true;
 
 
     useEffect(() => {
         axios.get('https://ineedadrink.onrender.com/admin/getall')
         .then((res) => {
-            setBeverages(res)
-            console.log(beverages);
+            setBeverages(res.data);
+            console.log(res.data);
         })
-    })
+        .catch((error) => {
+            console.error("There was an error!", error);
+        });
+    }, [])
 
     return (
         <div className="container">
