@@ -12,6 +12,10 @@ const Home = () => {
             <div className="content">
                 <Link to="/menu">Découvrir les boissons</Link>
             </div>
+
+            <div>
+                <Link to="/admin">🤓</Link>
+            </div>
         </div>
     )
 }

@@ -11,7 +11,6 @@ const DrinkManagement = () => {
         axios.get('https://ineedadrink.onrender.com/admin/getall')
         .then((res) => {
             setBeverages(res.data);
-            console.log(res.data);
         })
         .catch((error) => {
             console.error("There was an error!", error);
@@ -25,7 +24,20 @@ const DrinkManagement = () => {
             </header>
 
             <div className="beverages">
-                
+                {beverages.map((el) => {
+                    return(
+                        <div className="beverages" key={el.name}>
+                            <p>{el.name}</p>
+                            {el.ingredients.map((item) => {
+                                return(
+                                    <p key={Math.random()}>{item}</p>
+                                )
+                            })}
+                            <button>✏️</button>
+                            <button>❌</button>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )
