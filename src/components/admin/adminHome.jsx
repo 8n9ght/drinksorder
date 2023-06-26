@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Admin = () => {
     axios.defaults.withCredentials = true;
@@ -26,14 +27,15 @@ const Admin = () => {
             return;
         }
         try {
-    const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
-    const token = res.data.token;
-    console.log(token);
-    navigate('/adminmenu');
-  } catch (err) {
-    console.error(err);
-    setMessage('Les informations entrées sont incorrectes');
-  }
+            const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
+            const token = res.data.token;
+            Cookies.set('token', token, {secure: true});
+            console.log(token);
+            navigate('/adminmenu');
+      } catch (err) {
+            console.error(err);
+            setMessage('Les informations entrées sont incorrectes');
+      }
     };
 
     return (
