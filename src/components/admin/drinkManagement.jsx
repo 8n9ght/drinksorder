@@ -25,6 +25,11 @@ const DrinkManagement = () => {
         document.getElementById('confirmDelete').classList.add('hidden')
     }
 
+    const logout = async () => {
+        localStorage.removeItem('token');
+        navigate('/admin')
+    };
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
