@@ -144,6 +144,18 @@ button{
   text-align: center;
 }
 
+.logout{
+  color: #fff;
+  border: .01rem #fff solid;
+  border-radius: 0.1rem;
+  padding: 0.25rem 0.5rem;
+  font-size: .5rem;
+}
+
+.adminMenuText{
+  color: #6acab7;
+}
+
 .beverages{
   display: flex;
   flex-direction: column;
