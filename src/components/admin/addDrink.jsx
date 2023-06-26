@@ -3,23 +3,22 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddDrink = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate;
+  let apiUrl;
 
-    let apiUrl;
+  if (process.env.NODE_ENV === "development") {
+    apiUrl = `http://localhost:5000/admin/new`;
+  } else {
+    apiUrl = `https://ineedadrink.onrender.com/admin/new`;
+  }
 
-    if (process.env.NODE_ENV === "development") {
-        apiUrl = `http://localhost:5000/admin/new`;
-    } else {
-        apiUrl = `https://ineedadrink.onrender.com/admin/new`;
-    }
-
-    const [formData, setFormData] = useState({
-        name: "",
-        ingredients: [],
-        category: "",
-        availability: true,
-    });
+  const [formData, setFormData] = useState({
+    name: "",
+    ingredients: [],
+    category: "",
+    availability: true,
+  });
 
   const [imageFile, setImageFile] = useState(null);
   const formDataWithImage = new FormData();
@@ -28,6 +27,11 @@ const AddDrink = () => {
   formDataWithImage.append("category", formData.category);
   formDataWithImage.append("availability", formData.availability);
   formDataWithImage.append("image", imageFile);
+
+  const logout = async () => {
+    localStorage.removeItem("token");
+    navigate("/admin");
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,43 +53,47 @@ const AddDrink = () => {
     setFormData({ ...formData, ingredients: updatedIngredients });
   };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.error("No token found!");
-            return;
-        }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found!");
+      return;
+    }
 
-        axios.post(apiUrl, formData, { headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`}})
-            .then((res) => {
-                console.log(res.data);
-                setFormData({
-                    name: "",
-                    ingredients: [],
-                    category: "",
-                    availability: true,
-                });
-                setImageFile(null);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        };
-
-    const logout = async () => {
-        localStorage.removeItem('token');
-        navigate('/admin')
-    };
+    axios
+      .post(apiUrl, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setFormData({
+          name: "",
+          ingredients: [],
+          category: "",
+          availability: true,
+        });
+        setImageFile(null);
+        navigate("/addsuccess");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div className="container">
       <header>
-        <Link to="/adminmenu" className="back">Back</Link>
+        <Link to="/adminmenu" className="back">
+          Back
+        </Link>
         <h1>Add a new drink</h1>
-        <p onClick={logout} className="logout">Logout</p>
+        <p onClick={logout} className="logout">
+          Logout
+        </p>
       </header>
 
       <div className="addForm">
@@ -111,7 +119,10 @@ const AddDrink = () => {
                 onChange={(e) => handleIngredientChange(index, e)}
                 required
               />
-              <button type="button" onClick={() => handleRemoveIngredient(index)}>
+              <button
+                type="button"
+                onClick={() => handleRemoveIngredient(index)}
+              >
                 X
               </button>
             </div>
@@ -136,9 +147,13 @@ const AddDrink = () => {
           </select>
 
           <label htmlFor="image">Photo</label>
-            <input type="file" name="image" id="image"
+          <input
+            type="file"
+            name="image"
+            id="image"
             onChange={(e) => setImageFile(e.target.files[0])}
-            accept="image/*" />
+            accept="image/*"
+          />
 
           <div className="available">
             <label>Disponibilité</label>

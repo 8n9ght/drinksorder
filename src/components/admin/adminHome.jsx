@@ -49,6 +49,7 @@ const Admin = () => {
             </div>
 
             <Link to="/addadmin">New Drink Master</Link>
+            <Link to="/">I'm just a human</Link>
         </div>
     )
 }

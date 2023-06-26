@@ -5,8 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 const DrinkManagement = () => {
 
     const navigate = useNavigate();
+    const [deleteDrinkId, setDeleteDrinkId] = useState(null);
+    const [refresh, setRefresh] = useState(false);
 
     let apiUrl;
+    let deleteUrl;
   
     if (process.env.NODE_ENV === "development") {
         apiUrl = 'http://localhost:5000/admin/getall';
@@ -17,7 +20,8 @@ const DrinkManagement = () => {
     const [beverages, setBeverages] = useState([])
     axios.defaults.withCredentials = true;
 
-    const handlePopup = () => {
+    const handlePopup = (id) => {
+        setDeleteDrinkId(id);
         document.getElementById('confirmDelete').classList.remove('hidden')
     }
     
@@ -29,6 +33,51 @@ const DrinkManagement = () => {
         localStorage.removeItem('token');
         navigate('/admin')
     };
+
+    const handleDelete = () => {
+        const id = deleteDrinkId;
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error("No token found!");
+          return;
+        }
+        
+        if (process.env.NODE_ENV === "development") {
+            deleteUrl = `http://localhost:5000/admin/delete/${id}`;
+        } else {
+            deleteUrl = `https://ineedadrink.onrender.com/admin/delete/${id}`;
+        }
+    
+        axios.delete(deleteUrl, { headers: { Authorization: `Bearer ${token}` } })
+          .then((res) => {
+            console.log('Drink deleted successfully');
+            handleClosePopup();
+            setRefresh(true);
+          })
+          .catch((error) => {
+            console.error("There was an error!", error);
+            
+          });
+      };
+
+      /* const handleUpdate = (id) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error("No token found!");
+          return;
+        }
+        
+        const updateUrl = `your-api-url/${id}/update`;
+    
+        axios.put(updateUrl, {  }, { headers: { Authorization: `Bearer ${token}` } })
+          .then((res) => {
+            console.log('Drink updated successfully');
+            
+          })
+          .catch((error) => {
+            console.error("There was an error!", error);
+          });
+      }; */
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -42,23 +91,21 @@ const DrinkManagement = () => {
         }})
             .then((res) => {
                 setBeverages(res.data);
+                setRefresh(false);
             })
             .catch((error) => {
                 console.error("There was an error!", error);
             });
-    }, []);
+    }, [refresh]);
     
 
     return (
         <div className="container">
             <div id="confirmDelete" className="hidden">
-                <header className="popupHeader">
-                    <p onClick={handleClosePopup}>Close</p>
-                </header>
                 <h3 className="popupTitle">Confirm deletion</h3>
                 <div className="popupBtn">
-                    <button>Yes 🥲</button>
-                    <button>No 😲</button>
+                    <button onClick={handleDelete}>Yes 🥲</button>
+                    <button onClick={handleClosePopup}>No 😲</button>
                     
                 </div>
             </div>
@@ -85,7 +132,7 @@ const DrinkManagement = () => {
                             </div>
                             <article className="btnManagement">
                                 <button>✏️</button>
-                                <button onClick={handlePopup}>❌</button>
+                                <button onClick={() => handlePopup(el._id)}>❌</button>
                             </article>
                         </div>
                     )

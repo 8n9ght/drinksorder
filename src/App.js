@@ -11,6 +11,7 @@ import AdminMenu from './components/admin/adminMenu';
 import DrinkManagement from './components/admin/drinkManagement';
 import AddDrink from './components/admin/addDrink';
 import AddAdmin from './components/admin/adminNew';
+import AddDrinkSuccess from './components/admin/addDrinkSuccess';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/addadmin' element={<AddAdmin />}></Route>
           <Route path='/adddrink' element={<AddDrink />}></Route>
           <Route path='/drinkmanagement' element={<DrinkManagement />}></Route>
+          <Route path='/addsuccess' element={< AddDrinkSuccess/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
