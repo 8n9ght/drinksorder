@@ -14,7 +14,7 @@ function Cocktails() {
     }
 
     useEffect(() => {
-        axios.get(apiUrl)
+        axios.get(apiUrl, { withCredentials: true })
         .then((res) => {
             setDrinks(res.data)
             console.log(res)
