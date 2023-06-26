@@ -55,7 +55,7 @@ const DrinkManagement = () => {
             <div className="beverages">
                 {beverages.map((el) => {
                     return(
-                        <div className="beverageItem" key={el.name}>
+                        <div className="beverageItem" key={el.name} key={el.id}>
                             <div className="beverageContent">
                                 <h2>{el.name}</h2>
                                 <article className="beverageIngredients">
