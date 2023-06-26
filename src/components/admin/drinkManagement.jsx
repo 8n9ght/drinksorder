@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const DrinkManagement = () => {
+    axios.defaults.withCredentials = true;
 
     const navigate = useNavigate();
 
@@ -46,16 +47,16 @@ const DrinkManagement = () => {
     };
 
 
-    useEffect(()  => {
-        try{
-            axios.get(apiUrl, { withCredentials: true })
+    useEffect(() => {
+        axios.get(apiUrl, { withCredentials: true })
             .then((res) => {
                 setBeverages(res.data);
             })
-        }catch(error){
-            console.error("There was an error!", error);
-        };
-    }, [])
+            .catch((error) => {
+                console.error("There was an error!", error);
+            });
+    }, []);
+    
 
     return (
         <div className="container">
