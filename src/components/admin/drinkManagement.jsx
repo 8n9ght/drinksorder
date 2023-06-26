@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const DrinkManagement = () => {
-    axios.defaults.withCredentials = true;
 
     const navigate = useNavigate();
 
@@ -48,7 +47,7 @@ const DrinkManagement = () => {
 
 
     useEffect(() => {
-        axios.get(apiUrl, { withCredentials: true })
+        axios.get(apiUrl)
             .then((res) => {
                 setBeverages(res.data);
             })

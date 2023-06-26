@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddDrink = () => {
-    axios.defaults.withCredentials = true;
 
     const navigate = useNavigate;
 
