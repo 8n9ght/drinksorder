@@ -17,7 +17,6 @@ function Spirits() {
         axios.get(apiUrl, { withCredentials: true })
         .then((res) => {
             setDrinks(res.data)
-            console.log(res)
         })
     }, [])
 

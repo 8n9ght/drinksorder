@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 const Admin = () => {
     axios.defaults.withCredentials = true;
@@ -27,15 +26,14 @@ const Admin = () => {
             return;
         }
         try {
-            const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
-            const token = res.data.token;
-            Cookies.set('token', token, {secure: true});
-            console.log(token);
-            navigate('/adminmenu');
-      } catch (err) {
-            console.error(err);
-            setMessage('Les informations entrées sont incorrectes');
-      }
+    const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
+    const token = res.data.token;
+    console.log(token);
+    navigate('/adminmenu');
+  } catch (err) {
+    console.error(err);
+    setMessage('Les informations entrées sont incorrectes');
+  }
     };
 
     return (
@@ -47,7 +45,7 @@ const Admin = () => {
             <div className="adminForm">
                 <input type="text" max={10} value={username} onChange={e => setUsername(e.target.value)}></input>
                 <input type="password" max={10} value={password} onChange={e => setPassword(e.target.value)}></input>
-                <button onClick={handleConnect}>Go Hangover</button>
+                <button onClick={handleConnect} className="loginBtn">Get to Magic</button>
                 {message && <p className="logMessage">{message}</p>}
             </div>
 

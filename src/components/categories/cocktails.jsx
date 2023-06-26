@@ -17,7 +17,6 @@ function Cocktails() {
         axios.get(apiUrl, { withCredentials: true })
         .then((res) => {
             setDrinks(res.data)
-            console.log(res)
         })
     }, [])
 
@@ -34,11 +33,11 @@ function Cocktails() {
             <div className="drinkItem" key={drink.name}>
               <p className="drinkName">{drink.name}</p>
               <article className='drinkIngredients'>
-                {drink.ingredients.map((igd) => {
-                  return(
-                    <p key={Math.random()}>{igd}</p>
-                  )
-                })}
+              {drink.ingredients.map((igd, index) => {
+                return(
+                  <p key={Math.random()}>{igd}{(index < drink.ingredients.length - 1) ? ',' : ''}</p>
+                )
+              })}
               </article>
             </div>
           )
