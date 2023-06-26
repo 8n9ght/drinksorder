@@ -51,22 +51,29 @@ const AddDrink = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error("No token found!");
+            return;
+        }
 
-        axios.post(apiUrl, formData, { withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
-        .then((res) => {
-            console.log(res.data);
-            setFormData({
-                name: "",
-                ingredients: [],
-                category: "",
-                availability: true,
+        axios.post(apiUrl, formData, { headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`}})
+            .then((res) => {
+                console.log(res.data);
+                setFormData({
+                    name: "",
+                    ingredients: [],
+                    category: "",
+                    availability: true,
+                });
+                setImageFile(null);
+            })
+            .catch((error) => {
+                console.error(error);
             });
-            setImageFile(null);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    };
+        };
 
   const logout = async () => {
     let logoutUrl;
@@ -91,7 +98,7 @@ const AddDrink = () => {
   return (
     <div className="container">
       <header>
-        <Link to="/menu" className="back">Back</Link>
+        <Link to="/adminmenu" className="back">Back</Link>
         <h1>Add a new drink</h1>
         <p onClick={logout} className="logout">Logout</p>
       </header>

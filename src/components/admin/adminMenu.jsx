@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminMenu = () => {
@@ -6,23 +5,8 @@ const AdminMenu = () => {
     const navigate = useNavigate();
 
     const logout = async () => {
-        let logoutUrl;
-      
-        if (process.env.NODE_ENV === "development") {
-            logoutUrl = 'http://localhost:5000/admin/logout';
-        } else {
-            logoutUrl = 'https://ineedadrink.onrender.com/admin/logout';
-        }
-        
-        try {
-            const response = await axios.get(logoutUrl, { withCredentials: true });
-            if (response.status === 200) {
-                console.log('Logged out successfully');
-                navigate('/admin')
-            }
-        } catch (error) {
-            console.error('Failed to log out', error);
-        }
+        localStorage.removeItem('token');
+        navigate('/admin')
     };
 
     return (

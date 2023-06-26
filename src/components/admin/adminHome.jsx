@@ -25,7 +25,9 @@ const Admin = () => {
             return;
         }
         try {
-            await axios.post(apiUrl, { username, password }, { withCredentials: true });
+            const response = await axios.post(apiUrl, { username, password });
+            const token = response.data.token;
+            localStorage.setItem('token', token);
             navigate('/adminmenu');
         } catch (err) {
             console.error(err);

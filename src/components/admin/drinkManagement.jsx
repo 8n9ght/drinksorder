@@ -25,29 +25,16 @@ const DrinkManagement = () => {
         document.getElementById('confirmDelete').classList.add('hidden')
     }
 
-    const logout = async () => {
-        let logoutUrl;
-      
-        if (process.env.NODE_ENV === "development") {
-            logoutUrl = 'http://localhost:5000/admin/logout';
-        } else {
-            logoutUrl = 'https://ineedadrink.onrender.com/admin/logout';
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error("No token found!");
+            return;
         }
         
-        try {
-            const response = await axios.get(logoutUrl, { withCredentials: true });
-            if (response.status === 200) {
-                console.log('Logged out successfully');
-                navigate('/admin')
-            }
-        } catch (error) {
-            console.error('Failed to log out', error);
-        }
-    };
-
-
-    useEffect(() => {
-        axios.get(apiUrl)
+        axios.get(apiUrl, {headers: {
+            Authorization: `Bearer ${token}`
+        }})
             .then((res) => {
                 setBeverages(res.data);
             })
@@ -72,7 +59,7 @@ const DrinkManagement = () => {
             </div>
 
             <header>
-                <Link to="/menu" className="back">Back</Link>
+                <Link to="/adminmenu" className="back">Back</Link>
                 <h1>Drinks Management</h1>
                 <p onClick={logout} className="logout">Logout</p>
             </header>
