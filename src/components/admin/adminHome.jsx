@@ -26,14 +26,12 @@ const Admin = () => {
             return;
         }
         try {
-    const res = await axios.post(apiUrl, { username, password }, { withCredentials: true });
-    const token = res.data.token;
-    console.log(token);
-    navigate('/adminmenu');
-  } catch (err) {
-    console.error(err);
-    setMessage('Les informations entrées sont incorrectes');
-  }
+            await axios.post(apiUrl, { username, password }, { withCredentials: true });
+            navigate('/adminmenu');
+        } catch (err) {
+            console.error(err);
+            setMessage('Les informations entrées sont incorrectes');
+        }
     };
 
     return (

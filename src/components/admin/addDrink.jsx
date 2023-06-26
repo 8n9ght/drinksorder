@@ -49,24 +49,24 @@ const AddDrink = () => {
     setFormData({ ...formData, ingredients: updatedIngredients });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    axios.post(apiUrl, formData, { withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
-    .then((res) => {
-        console.log(res.data);
-        setFormData({
-            name: "",
-            ingredients: [],
-            category: "",
-            availability: true,
+        axios.post(apiUrl, formData, { withCredentials: true, headers: {"Content-Type": "multipart/form-data"}})
+        .then((res) => {
+            console.log(res.data);
+            setFormData({
+                name: "",
+                ingredients: [],
+                category: "",
+                availability: true,
+            });
+            setImageFile(null);
+        })
+        .catch((error) => {
+            console.error(error);
         });
-        setImageFile(null);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-  };
+    };
 
   const logout = async () => {
     let logoutUrl;
