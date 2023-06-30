@@ -1,7 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+
+    const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
+    
+    const handleChange = event => {
+        setIdentifier(event.target.value);
+        localStorage.setItem('identifier', event.target.value);
+    };
+
     return (
         <div className="container">
             <header className="homeHeader">
@@ -11,6 +19,7 @@ const Home = () => {
 
             <div className="content">
                 <Link to="/menu">Découvrir les boissons</Link>
+                <input type="text" value={identifier} onChange={handleChange} placeholder="Entrez votre pseudo, nom ou prénom"/>
             </div>
 
             <div>
