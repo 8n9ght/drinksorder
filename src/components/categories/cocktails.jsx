@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 function Cocktails() {
+
+    const user = localStorage.getItem('identifier')
+
     const [drinks, setDrinks] = useState([])
 
     let apiUrl;
@@ -38,9 +41,9 @@ function Cocktails() {
                   <p key={Math.random()}>{igd}{(index < drink.ingredients.length - 1) ? ',' : ''}</p>
                 )
               })}
+              {user ? <button>Order</button> : null}
               </article>
-            </div>
-          )
+            </div> )
         })}
       </div>
 </div>

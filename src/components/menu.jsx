@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 
 const Menu = () => {
+
+    const user = localStorage.getItem('identifier')
+
     return (
         <div className="container">
             <header>
                 <Link to="/" className="back">Back</Link>
-                <h1>Choisir un remède</h1>
+                {user ? <h1>{user} découvre nos remèdes</h1> : <h1>Liste des remèdes</h1>} 
             </header>
 
             <div className="menuLinks">
