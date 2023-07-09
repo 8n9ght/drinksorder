@@ -9,9 +9,6 @@ const Home = () => {
     const navigate = useNavigate()
 
     const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
-
-
-    //let externalUserId = identifier;
     
     const handleChange = event => {
         setIdentifier(event.target.value);
@@ -20,6 +17,8 @@ const Home = () => {
 
     const goToBeverages = () => {
         OneSignal.setExternalUserId(identifier);
+        OneSignal.setSubscription(true)
+        OneSignal.sendTag('order', true)
         console.log(identifier)
 
         navigate('/menu')
