@@ -8,6 +8,19 @@ const Home = () => {
 
     const navigate = useNavigate()
 
+    const [initialized, setInitialized] = useState(false);
+    
+    useEffect(() => {
+        OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1' }).then(() => {
+            setInitialized(true);
+            OneSignal.showSlidedownPrompt().then(() => {
+            console.log('It worked !')
+            console.log(initialized)
+            });
+        })
+    }, [])
+
+
     const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
     
     const handleChange = event => {

@@ -13,19 +13,8 @@ import DrinkManagement from './components/admin/drinkManagement';
 import AddDrink from './components/admin/addDrink';
 import AddAdmin from './components/admin/adminNew';
 import AddDrinkSuccess from './components/admin/addDrinkSuccess';
-import OneSignal from 'react-onesignal';
 
 function App() {
-
-  const [initialized, setInitialized] = useState(false);
-
-  OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1' }).then(() => {
-    setInitialized(true);
-    OneSignal.showSlidedownPrompt().then(() => {
-      console.log('It worked !')
-      console.log(initialized)
-    });
-  })
   
   return (
     <div className="App">
