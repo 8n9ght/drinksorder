@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import OneSignal from 'react-onesignal';
 
 function Cocktails() {
 
@@ -15,6 +16,12 @@ function Cocktails() {
         apiUrl = 'http://localhost:5000/cocktails/';
     } else {
         apiUrl = 'https://ineedadrink.onrender.com/cocktails/';
+    }
+
+
+    const handleOrder = () => {
+      OneSignal.sendTag('order', true)
+      console.log('something happened')
     }
 
     useEffect(() => {
@@ -42,7 +49,7 @@ function Cocktails() {
                   <p key={Math.random()}>{igd}{(index < drink.ingredients.length - 1) ? ',' : ''}</p>
                 )
               })}
-              {user ? <button>Order</button> : null}
+              {user ? <button onClick={handleOrder}>Order</button> : null}
               </article>
             </div> )
         })}

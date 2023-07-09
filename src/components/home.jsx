@@ -10,12 +10,6 @@ const Home = () => {
 
     const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
 
-    useEffect(() => {
-        OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1'})
-        .then(() => {
-            OneSignal.setExternalUserId(identifier)
-        })
-    }, [])
 
     //let externalUserId = identifier;
     
@@ -24,10 +18,9 @@ const Home = () => {
         localStorage.setItem('identifier', event.target.value);
     };
 
-    const goToBeverages = (tag) => {
-        OneSignal.sendTag('tech', tag).then(() => {
-            console.log('tagged')
-        })
+    const goToBeverages = () => {
+        OneSignal.setExternalUserId(identifier);
+        console.log(identifier)
 
         navigate('/menu')
     }
