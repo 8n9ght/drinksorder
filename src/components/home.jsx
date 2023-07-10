@@ -7,17 +7,9 @@ import OneSignal from 'react-onesignal';
 const Home = () => {
 
     const navigate = useNavigate()
-
-    const [initialized, setInitialized] = useState(false);
     
     useEffect(() => {
-        OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1' }).then(() => {
-            setInitialized(true);
-            OneSignal.showSlidedownPrompt().then(() => {
-            console.log('It worked !')
-            console.log(initialized)
-            });
-        })
+        OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1' })
     }, [])
 
 
@@ -32,9 +24,13 @@ const Home = () => {
         OneSignal.setExternalUserId(identifier);
         OneSignal.setSubscription(true)
         OneSignal.sendTag('order', true)
+        console.log("before tag")
+        .then(() => {
+            console.log("tagged")
+        })
         console.log(identifier)
 
-        navigate('/menu')
+        //navigate('/menu')
     }
 
     return (
