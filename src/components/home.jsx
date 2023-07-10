@@ -23,8 +23,8 @@ const Home = () => {
     const goToBeverages = () => {
         OneSignal.setExternalUserId(identifier);
         OneSignal.setSubscription(true)
-        OneSignal.sendTag('order', true)
         console.log("before tag")
+        OneSignal.sendTag('order', true)
         .then(() => {
             console.log("tagged")
         })
