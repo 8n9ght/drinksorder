@@ -13,6 +13,8 @@ const Home = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        console.log(beamsClient)
+        console.log(PusherPushNotifications)
         beamsClient.start()
         .then(() => console.log('Successfully registered!'))
         .catch(console.error);
