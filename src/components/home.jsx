@@ -1,16 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import OneSignal from 'react-onesignal';
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 
 const Home = () => {
 
-    const navigate = useNavigate()
+    const beamsClient = new PusherPushNotifications.Client({
+        instanceId: 'a8bc86fb-f6d9-4bc3-840e-47ede58169af',
+    });
     
+    const navigate = useNavigate()
+
     useEffect(() => {
-        OneSignal.init({ appId: '5152c4b9-65fc-4dd4-bbeb-ddee35c198e1' })
-    }, [])
+        beamsClient.start()
+        .then(() => beamsClient.addDeviceInterest('hello'))
+        .then(() => console.log('Successfully registered and subscribed!'))
+        .catch(console.error);
+    })
+    
+    
+        
 
 
     const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
@@ -21,16 +31,9 @@ const Home = () => {
     };
 
     const goToBeverages = () => {
-        OneSignal.setExternalUserId(identifier);
-        OneSignal.setSubscription(true)
-        console.log("before tag")
-        OneSignal.sendTag('order', true)
-        .then(() => {
-            console.log("tagged")
-        })
-        console.log(identifier)
 
-        //navigate('/menu')
+
+        navigate('/menu')
     }
 
     return (
