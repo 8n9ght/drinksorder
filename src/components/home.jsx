@@ -14,8 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         beamsClient.start()
-        .then(() => beamsClient.addDeviceInterest('hello'))
-        .then(() => console.log('Successfully registered and subscribed!'))
+        .then(() => console.log('Successfully registered!'))
         .catch(console.error);
     })
     
