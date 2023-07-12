@@ -12,14 +12,11 @@ const Home = () => {
     
     const navigate = useNavigate()
 
-    useEffect(() => {
-        console.log(beamsClient)
-        console.log(beamsClient.start())
-        console.log(PusherPushNotifications)
+/*     useEffect(() => {
         beamsClient.start()
         .then(() => console.log('Successfully registered!'))
         .catch(console.error);
-    })
+    }) */
     
     
         
