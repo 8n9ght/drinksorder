@@ -14,6 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         console.log(beamsClient)
+        console.log(beamsClient.start())
         console.log(PusherPushNotifications)
         beamsClient.start()
         .then(() => console.log('Successfully registered!'))
