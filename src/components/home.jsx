@@ -5,6 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
 
+    const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
+  
+    const requestNotificationPermission = () => {
+      Notification.requestPermission()
+        .then((permission) => {
+          setNotificationPermission("granted");
+          if(permission === "granted"){
+            console.log("permisison granted")
+          } else {
+            console.log("permission denied")
+          }
+        })
+        .catch((error) => {
+          console.error("Error requesting notification permission:", error);
+        });
+    };
     
     const navigate = useNavigate()
 
@@ -30,6 +46,10 @@ const Home = () => {
                 <input type="text" value={identifier} onChange={handleChange} placeholder="Entrez votre pseudo, nom ou prénom"/>
                 <button onClick={goToBeverages}>Découvrir les boissons</button>
             </div>
+
+            
+            <button onClick={requestNotificationPermission}>Activer les notifications</button>
+            
 
             <div>
                 <Link to="/admin">🤓</Link>
