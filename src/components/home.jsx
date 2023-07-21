@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
 
-    const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
+    const [notificationPermission, setNotificationPermission] = useState();
   
     const requestNotificationPermission = () => {
       Notification.requestPermission()
