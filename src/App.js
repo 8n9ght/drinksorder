@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import Home from "./components/home";
 import Menu from "./components/menu";
 import Admin from "./components/admin/adminHome";
@@ -15,6 +16,22 @@ import AddAdmin from './components/admin/adminNew';
 import AddDrinkSuccess from './components/admin/addDrinkSuccess';
 
 function App() {
+  
+  const requestPermission = async () => {
+    console.log('Requesting permission')
+    await Notification.requestPermission()
+    .then((permission) => {
+      if(permission === "granted"){
+        console.log("Permission granted")
+      } else {
+        console.log("Permission denied")
+      }
+    })
+  }
+
+  useEffect(() => {
+    requestPermission()
+  }, [])
   
   return (
     <div className="App">

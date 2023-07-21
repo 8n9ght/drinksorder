@@ -2,23 +2,18 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 
 function Cocktails() {
 
-    const beamsClient = new PusherPushNotifications.Client({
-      instanceId: 'a8bc86fb-f6d9-4bc3-840e-47ede58169af',
-    });
-
-    const item = useRef()
-
-    const user = localStorage.getItem('identifier')
+    //const user = localStorage.getItem('identifier')
 
     const [drinks, setDrinks] = useState([])
 
     let apiUrl;
     let ordersUrl;
+
+    let user = localStorage.getItem('identifier')
     
   
     if (process.env.NODE_ENV === "development") {
@@ -35,23 +30,26 @@ function Cocktails() {
 
 
     const handleOrder = (name, ingredients) => {
-
-      beamsClient
-      .start()
-      .then((beamsClient) => beamsClient.getDeviceId())
-      .then(() => beamsClient.addDeviceInterest("hello"))
-      .then(() => {
-        console.log(name, ingredients)
-        axios.post(ordersUrl, {name, ingredients})
+        /* axios.post(ordersUrl, {name, ingredients})
         .then((res) => {
           console.log("Order created:", res.data);
         })
         .catch((error) => {
           console.error("Error creating order:", error);
-        });
-      })
-      .catch(console.error);
+        }); */
+        new Notification("Commande créée ! 🍸", {
+          body:"Ta commande a bien été transmise à l'atelier !",
+        })
     }
+    
+    /* 
+    Next notifications content :
+      title: "Shake, shake, shake ! 🪄",
+      body: "On mélange les ingrédients de ta potion, tiens toi prêt !",
+
+      title: "Ding Dong ! 🛎️",
+      body: "Ta potion est prête, excellente dégustation !",
+    */
 
     useEffect(() => {
         axios.get(apiUrl, { withCredentials: true })
@@ -70,7 +68,7 @@ function Cocktails() {
       <div className="drinks">
         {drinks.map((drink) => {
           return(
-            <div className="drinkItem" key={drink.name} ref={item}>
+            <div className="drinkItem" key={drink.name}>
               <p className="drinkName">{drink.name}</p>
               <article className='drinkIngredients'>
               {drink.ingredients.map((igd, index) => {

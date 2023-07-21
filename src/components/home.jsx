@@ -1,26 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 
 const Home = () => {
 
-    const beamsClient = new PusherPushNotifications.Client({
-        instanceId: 'a8bc86fb-f6d9-4bc3-840e-47ede58169af',
-    });
     
     const navigate = useNavigate()
-
-/*     useEffect(() => {
-        beamsClient.start()
-        .then(() => console.log('Successfully registered!'))
-        .catch(console.error);
-    }) */
-    
-    
-        
-
 
     const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
     
@@ -30,8 +16,6 @@ const Home = () => {
     };
 
     const goToBeverages = () => {
-
-
         navigate('/menu')
     }
 
