@@ -1,39 +1,54 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Home = () => {
-    const [notificationPermission, setNotificationPermission] = useState();
-    const navigate = useNavigate();
-    const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
 
-    const handleChange = (event) => {
+const Home = () => {
+
+    const [notificationPermission, setNotificationPermission] = useState();
+  
+    const requestNotificationPermission = () => {
+      console.log('Requesting permission')
+      Notification.requestPermission()
+          .then((permission) => {
+            console.log(permission)
+            const notifStatus = Notification.permission === notificationPermission
+            console.log(permission + " updated")
+              if (permission === "granted") {
+                  console.log("Permission granted");
+              } else {
+                  console.log("Permission denied");
+              }
+          })
+          .catch((error) => {
+              console.error("Error requesting notification permission:", error);
+          });
+  };
+
+  const enableNotifications = () => {
+    setNotificationPermission("granted");
+  }
+  
+  const disableNotifications = () => {
+    setNotificationPermission("denied");
+  }
+
+  useEffect(() => {
+    requestNotificationPermission()
+  }, [])
+    
+    const navigate = useNavigate()
+
+    const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
+    
+    const handleChange = event => {
         setIdentifier(event.target.value);
         localStorage.setItem('identifier', event.target.value);
     };
 
     const goToBeverages = () => {
-        navigate('/menu');
-    };
-
-    const requestNotificationPermission = () => {
-        console.log('Requesting permission');
-        Notification.requestPermission()
-            .then((permission) => {
-                setNotificationPermission(permission);
-                if (permission === "granted") {
-                    console.log("Permission granted");
-                } else {
-                    console.log("Permission denied");
-                }
-            })
-            .catch((error) => {
-                console.error("Error requesting notification permission:", error);
-            });
-    };
-
-    useEffect(() => {
-        setNotificationPermission(Notification.permission === "granted");
-    }, []);
+        navigate('/menu')
+    }
 
     return (
         <div className="container">
@@ -43,18 +58,20 @@ const Home = () => {
             </header>
 
             <div className="content">
-                <input type="text" value={identifier} onChange={handleChange} placeholder="Entrez votre pseudo, nom ou prénom" />
+                <input type="text" value={identifier} onChange={handleChange} placeholder="Entrez votre pseudo, nom ou prénom"/>
                 <button onClick={goToBeverages}>Découvrir les boissons</button>
             </div>
 
-            {notificationPermission !== "granted" && <button onClick={requestNotificationPermission}>Activer les notifications</button>}
-            {notificationPermission !== "granted" && <button >Non merci</button>}
+            
+            {notificationPermission !== "granted" && <button onClick={enableNotifications}>Activer les notifications</button>}
+            {notificationPermission !== "granted" && <button onClick={disableNotifications}>Non merci</button>}
+            
 
             <div>
                 <Link to="/admin">🤓</Link>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default Home;
