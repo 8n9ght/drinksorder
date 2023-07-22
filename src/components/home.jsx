@@ -11,9 +11,6 @@ const Home = () => {
       console.log('Requesting permission')
       Notification.requestPermission()
           .then((permission) => {
-            console.log(permission)
-            const notifStatus = Notification.permission === notificationPermission
-            console.log(permission + " updated")
               if (permission === "granted") {
                   console.log("Permission granted");
               } else {
@@ -32,10 +29,6 @@ const Home = () => {
   const disableNotifications = () => {
     setNotificationPermission("denied");
   }
-
-  useEffect(() => {
-    requestNotificationPermission()
-  }, [])
     
     const navigate = useNavigate()
 
@@ -63,7 +56,7 @@ const Home = () => {
             </div>
 
             
-            {notificationPermission !== "granted" && <button onClick={enableNotifications}>Activer les notifications</button>}
+            {notificationPermission !== "granted" && <button onClick={requestNotificationPermission}>Activer les notifications</button>}
             {notificationPermission !== "granted" && <button onClick={disableNotifications}>Non merci</button>}
             
 
