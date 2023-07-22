@@ -11,11 +11,17 @@ const Home = () => {
       console.log('Requesting permission')
       Notification.requestPermission()
           .then((permission) => {
+            if (!("Notification" in window)) {
+              // Check if the browser supports notifications
+              alert("This browser does not support desktop notification");
+            }
+            else{
               if (permission === "granted") {
                   console.log("Permission granted");
               } else {
                   console.log("Permission denied");
               }
+            }
           })
           .catch((error) => {
               console.error("Error requesting notification permission:", error);
