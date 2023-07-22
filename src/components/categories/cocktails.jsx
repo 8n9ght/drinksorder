@@ -39,7 +39,9 @@ function Cocktails() {
         }); */
         new Notification("Commande créée ! 🍸", {
           body:"Ta commande a bien été transmise à l'atelier !",
+          tag:"Ordered"
         })
+        console.log("Commande passée !")
     }
     
     /* 

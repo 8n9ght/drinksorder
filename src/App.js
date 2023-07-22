@@ -17,22 +17,6 @@ import AddDrinkSuccess from './components/admin/addDrinkSuccess';
 
 function App() {
   
-  const requestPermission = async () => {
-    console.log('Requesting permission')
-    await Notification.requestPermission()
-    .then((permission) => {
-      if(permission === "granted"){
-        console.log("Permission granted")
-      } else {
-        console.log("Permission denied")
-      }
-    })
-  }
-
-  useEffect(() => {
-    requestPermission()
-  }, [])
-  
   return (
     <div className="App">
       <BrowserRouter>
