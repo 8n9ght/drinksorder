@@ -1,76 +1,122 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Home = () => {
+  let apiUrl;
+  let pushUrl;
 
-    const [notificationPermission, setNotificationPermission] = useState();
+  const [notificationPermission, setNotificationPermission] = useState();
+
+  if (process.env.NODE_ENV === "development") {
+    apiUrl = "http://localhost:5000/users/create";
+  } else {
+    apiUrl = "https://ineedadrink.onrender.com/users/create";
+  }
   
-    const requestNotificationPermission = () => {
-      console.log('Requesting permission')
-      Notification.requestPermission()
-          .then((permission) => {
-            if (!("Notification" in window)) {
-              // Check if the browser supports notifications
-              alert("This browser does not support desktop notification");
-            }
-            else{
-              if (permission === "granted") {
-                  console.log("Permission granted");
-              } else {
-                  console.log("Permission denied");
-              }
-            }
-          })
-          .catch((error) => {
-              console.error("Error requesting notification permission:", error);
-          });
+  if (process.env.NODE_ENV === "development") {
+    pushUrl = "http://localhost:5000/push/subscribe";
+  } else {
+    pushUrl = "https://ineedadrink.onrender.com/push/subscribe";
+  }
+
+  const requestNotificationPermission = () => {
+    console.log("Requesting permission");
+    Notification.requestPermission()
+      .then((permission) => {
+        if (permission === "granted") {
+          subscribeToPushNotifications();
+          console.log("Permission granted");
+        } else {
+          console.log("Permission denied");
+        }
+      })
+      .catch((error) => {
+        console.error("Error requesting notification permission:", error);
+      });
   };
 
-  const enableNotifications = () => {
-    setNotificationPermission("granted");
-  }
-  
+  const subscribeToPushNotifications = async () => {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const pushSubscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey:
+          "BPkR1jdrs0g36zCHoLW2jz84hGGLYlLZQdQ_VZSEBUVKS8xm_kC2l8TQGnR-mlRNvARZ8mE3Ci0kSpCAi7t1PQw",
+      });
+      await axios.post(pushUrl, pushSubscription);
+      console.log("Push Subscription:", pushSubscription);
+    } catch (error) {
+      console.error("Error subscribing to Push Notifications:", error);
+    }
+  };
+
   const disableNotifications = () => {
     setNotificationPermission("denied");
-  }
-    
-    const navigate = useNavigate()
+  };
 
-    const [identifier, setIdentifier] = useState(localStorage.getItem('identifier') || '');
-    
-    const handleChange = event => {
-        setIdentifier(event.target.value);
-        localStorage.setItem('identifier', event.target.value);
-    };
+  const navigate = useNavigate();
 
-    const goToBeverages = () => {
-        navigate('/menu')
-    }
+  const [identifier, setIdentifier] = useState(
+    localStorage.getItem("identifier") || ""
+  );
 
-    return (
-        <div className="container">
-            <header className="homeHeader">
-                <p>Welcome to</p>
-                <h1>J-A's Tavern</h1>
-            </header>
+  const handleChange = (event) => {
+    setIdentifier(event.target.value);
+    localStorage.setItem("identifier", event.target.value);
+  };
 
-            <div className="content">
-                <input type="text" value={identifier} onChange={handleChange} placeholder="Entrez votre pseudo, nom ou prénom"/>
-                <button onClick={goToBeverages}>Découvrir les boissons</button>
-            </div>
+  const handleSubscribe = () => {
+    axios
+      .post(apiUrl, { name: identifier })
+      .then((response) => {
+        console.log("Utilisateur temporaire enregistré avec succès !");
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de l'enregistrement de l'utilisateur temporaire :",
+          error
+        );
+      });
+  };
 
-            
-            {notificationPermission !== "granted" && <button onClick={requestNotificationPermission}>Activer les notifications</button>}
-            {notificationPermission !== "granted" && <button onClick={disableNotifications}>Non merci</button>}
-            
+  const goToBeverages = () => {
+    navigate("/menu");
+  };
 
-            <div>
-                <Link to="/admin">🤓</Link>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="container">
+      <header className="homeHeader">
+        <p>Welcome to</p>
+        <h1>J-A's Tavern</h1>
+      </header>
+
+      <div className="content">
+        <input
+          type="text"
+          value={identifier}
+          onChange={handleChange}
+          placeholder="Entrez votre pseudo, nom ou prénom"
+        />
+        <button onClick={handleSubscribe}>Valider</button>
+        <button onClick={goToBeverages}>Découvrir les boissons</button>
+      </div>
+
+      {notificationPermission !== "granted" && (
+        <button onClick={requestNotificationPermission}>
+          Activer les notifications
+        </button>
+      )}
+      {notificationPermission !== "granted" && (
+        <button onClick={disableNotifications}>Non merci</button>
+      )}
+
+      <div>
+        <Link to="/admin">🤓</Link>
+      </div>
+    </div>
+  );
+};
 
 export default Home;
