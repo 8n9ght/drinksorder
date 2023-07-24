@@ -43,7 +43,7 @@ const Home = () => {
       const pushSubscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey:
-          "BPkR1jdrs0g36zCHoLW2jz84hGGLYlLZQdQ_VZSEBUVKS8xm_kC2l8TQGnR-mlRNvARZ8mE3Ci0kSpCAi7t1PQw",
+          "BDQAXuUBj7fACEaxZAgO5uprZa_TPUd1XtqrqORXxI8-5yg43hnQpg482BIJVszEXjp3Y3myJX3H0SnJR2ou4Co",
       });
       await axios.post(pushUrl, pushSubscription);
       console.log("Push Subscription:", pushSubscription);
