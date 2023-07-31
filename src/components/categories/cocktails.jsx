@@ -2,6 +2,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isPushNotificationSupported, sendNotification, initializePushNotifications, registerServiceWorker } from "../../utils/pushUtils";
+
 
 function Cocktails() {
   //const user = localStorage.getItem('identifier')
@@ -27,7 +29,7 @@ function Cocktails() {
   }
   
   if (process.env.NODE_ENV === "development") {
-    pushUrl = "http://localhost:5000/push/send-push";
+    pushUrl = "http://localhost:5000/push/send";
   } else {
     pushUrl = "https://ineedadrink.onrender.com/push/send-push";
   }
@@ -36,11 +38,12 @@ function Cocktails() {
     axios.post(ordersUrl, { name, ingredients })
       .then((res) => {
         console.log(res.data.msg);
-        axios.post(pushUrl, {
+        sendNotification()
+        /* axios.post(pushUrl, {
           title: "Commande créée ! 🍸",
           body: " Ta commande a bien été transmise à l'atelier !",
           requireInteraction: true,
-        });
+        }); */
       })
       .catch((error) => {
         console.error("Une erreur est survenue à la création de la commande:", error);

@@ -11,12 +11,12 @@ self.addEventListener('push', (event) => {
     );
   });
   
-  self.addEventListener('notificationclick', (event) => {
+/*   self.addEventListener('notificationclick', (event) => {
     event.notification.close();
   
     const urlToOpen = 'https://www.example.com';
     event.waitUntil(clients.openWindow(urlToOpen));
-  });
+  }); */
   
   self.addEventListener('pushsubscriptionchange', (event) => {
     event.waitUntil(
