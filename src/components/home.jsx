@@ -54,8 +54,8 @@ const Home = () => {
     <div className="container">
       {/* <Notifications /> */}
       <header className="homeHeader">
-        <p>Welcome to</p>
-        <h1>J-A's Tavern</h1>
+        <p>Bienvenue à</p>
+        <h1>La Taverne de J-A</h1>
       </header>
 
       <div className="content">
