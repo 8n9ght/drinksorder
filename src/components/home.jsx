@@ -8,6 +8,8 @@ const Home = () => {
 
   let apiUrl;
   const [notificationPermission, setNotificationPermission] = useState("default");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const name = useRef();
 
@@ -36,10 +38,12 @@ const Home = () => {
     if (identifier === "") {
       alert("Veuillez renseigner le champ");
     } else {
+      setLoading(true);
       localStorage.setItem("identifier", name.current.value);
       axios
         .post(apiUrl, { name: identifier })
         .then((response) => {
+          setLoading(false);
           alert("Ton inscription a bien été validée !");
           navigate("/menu");
         })
@@ -82,7 +86,9 @@ const Home = () => {
               placeholder="Entre un pseudo, nom ou prénom"
               ref={name}
             />
-            <button onClick={handleSubscribe}>Découvrir la carte</button>
+            <button onClick={handleSubscribe}>
+              {loading ? (<div className="loader"></div>) : ("Découvrir la carte")}
+            </button>
           </div>
         )}
       </div>
