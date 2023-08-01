@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import addNotification from 'react-push-notification';
+//import addNotification from 'react-push-notification';
 
 
 function Cocktails() {
@@ -30,12 +30,12 @@ function Cocktails() {
     axios.post(ordersUrl, { name, ingredients })
       .then((res) => {
         alert("Ta commande a bien été passée")
-        addNotification({
+        /* addNotification({
           title: 'Warning',
           subtitle: 'This is a subtitle',
           message: 'This is a very long message',
-          native: true // when using native, your OS will handle theming.
-        });
+          native: true
+        }); */
       })
       .catch((error) => {
         console.error("Une erreur est survenue à la création de la commande:", error);
