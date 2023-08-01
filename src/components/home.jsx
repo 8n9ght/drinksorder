@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Notifications } from 'react-push-notification';
+//import { Notifications } from 'react-push-notification';
 
 const Home = () => {
 
@@ -52,7 +52,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <Notifications />
+      {/* <Notifications /> */}
       <header className="homeHeader">
         <p>Bienvenue à</p>
         <h1>La Taverne de J-A</h1>
