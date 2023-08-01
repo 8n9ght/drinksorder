@@ -9,7 +9,16 @@
       name="description"
       content="Discover bunch of unique tasteful beverages at J-A's Tavern !"
     />
-    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "acfc5a8a-d9f7-4875-b46d-ba990edf49bd",
+          allowLocalhostAsSecureOrigin: true,
+        });
+      });
+    </script>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>J-A's Tavern</title>
   </head>

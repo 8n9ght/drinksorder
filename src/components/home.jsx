@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Notifications } from 'react-push-notification';
 
 const Home = () => {
-
+  
   let apiUrl;
   const [notificationPermission, setNotificationPermission] = useState("default");
   const [loading, setLoading] = useState(false);
-
+  
   const navigate = useNavigate();
   const name = useRef();
 
@@ -23,13 +23,14 @@ const Home = () => {
     setNotificationPermission("denied");
     navigate("/menu");
   };
-
+  
   const enableNotifications = () => {
     setNotificationPermission("granted");
   }
 
   const [identifier, setIdentifier] = useState(localStorage.getItem("identifier") || "");
-
+  let externalUserId = identifier;
+  
   const handleChange = (event) => {
     setIdentifier(event.target.value);
   };
