@@ -150,6 +150,11 @@ button{
   color: #fff;
 }
 
+button:hover{
+  background: #6acab7;
+  color: #0d1c19;
+}
+
 /* ------------------- Menu ------------------- */
 
 .menuLinks{

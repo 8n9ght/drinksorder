@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const DrinkManagement = () => {
@@ -105,8 +105,8 @@ const DrinkManagement = () => {
             <div id="confirmDelete" className="hidden">
                 <h3 className="popupTitle">Confirm deletion</h3>
                 <div className="popupBtn">
-                    <button onClick={handleDelete}>Yes 🥲</button>
-                    <button onClick={handleClosePopup}>No 😲</button>
+                    <button onClick={handleDelete}>Yes <span role="img" aria-label="yes emoji">🥲</span></button>
+                    <button onClick={handleClosePopup}>No <span role="img" aria-label="no emoji">😲</span></button>
                     
                 </div>
             </div>
@@ -132,8 +132,8 @@ const DrinkManagement = () => {
                                 </article>
                             </div>
                             <article className="btnManagement">
-                                <button>✏️</button>
-                                <button onClick={() => handlePopup(el._id)}>❌</button>
+                                <button><span role="img" aria-label="edit emoji">✏️</span></button>
+                                <button onClick={() => handlePopup(el._id)}><span role="img" aria-label="edit emoji">❌</span></button>
                             </article>
                         </div>
                     )

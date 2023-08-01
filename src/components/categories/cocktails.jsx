@@ -2,17 +2,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { isPushNotificationSupported, sendNotification, initializePushNotifications, registerServiceWorker } from "../../utils/pushUtils";
+import addNotification from 'react-push-notification';
 
 
 function Cocktails() {
-  //const user = localStorage.getItem('identifier')
 
   const [drinks, setDrinks] = useState([]);
 
   let apiUrl;
   let ordersUrl;
-  let pushUrl;
 
   let user = localStorage.getItem("identifier");
 
@@ -27,23 +25,17 @@ function Cocktails() {
   } else {
     ordersUrl = "https://ineedadrink.onrender.com/orders/";
   }
-  
-  if (process.env.NODE_ENV === "development") {
-    pushUrl = "http://localhost:5000/push/send";
-  } else {
-    pushUrl = "https://ineedadrink.onrender.com/push/send-push";
-  }
 
   const handleOrder = (name, ingredients) => {
     axios.post(ordersUrl, { name, ingredients })
       .then((res) => {
-        console.log(res.data.msg);
-        sendNotification()
-        /* axios.post(pushUrl, {
-          title: "Commande créée ! 🍸",
-          body: " Ta commande a bien été transmise à l'atelier !",
-          requireInteraction: true,
-        }); */
+        alert("Ta commande a bien été passée")
+        addNotification({
+          title: 'Warning',
+          subtitle: 'This is a subtitle',
+          message: 'This is a very long message',
+          native: true // when using native, your OS will handle theming.
+        });
       })
       .catch((error) => {
         console.error("Une erreur est survenue à la création de la commande:", error);
