@@ -2,9 +2,23 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Notifications } from 'react-push-notification';
+import OneSignal from 'react-onesignal';
 
 const Home = () => {
+
+  let appID;
+
+  if (process.env.NODE_ENV === "development") {
+    appID = "acfc5a8a-d9f7-4875-b46d-ba990edf49bd";
+    OneSignal.init({ appId: appID, allowLocalhostAsSecureOrigin: true});
+    OneSignal.showSlidedownPrompt();
+  } else {
+    appID = "254a216f-d856-4dd6-ab53-f03dd8654ea1";
+    OneSignal.init({ appId: appID }).then(() => {
+    OneSignal.showSlidedownPrompt().then(() => {
+    });
+  })
+  }
   
   let apiUrl;
   const [notificationPermission, setNotificationPermission] = useState("default");
@@ -29,7 +43,6 @@ const Home = () => {
   }
 
   const [identifier, setIdentifier] = useState(localStorage.getItem("identifier") || "");
-  let externalUserId = identifier;
   
   const handleChange = (event) => {
     setIdentifier(event.target.value);
@@ -57,7 +70,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      <Notifications />
       <header className="homeHeader">
         <p>Bienvenue à</p>
         <h1>La Taverne de J-A</h1>
@@ -92,6 +104,7 @@ const Home = () => {
             </button>
           </div>
         )}
+
       </div>
     </div>
   );

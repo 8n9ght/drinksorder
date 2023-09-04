@@ -24,7 +24,7 @@ function Mocktails() {
   return (
     <div className="container">
       <header>
-        <Link to="/menu" className="back">Back</Link>
+        <Link to="/categories" className="back">Back</Link>
         <h1>Mocktails</h1>
       </header>
 

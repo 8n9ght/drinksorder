@@ -24,7 +24,7 @@ function Spirits() {
   return (
     <div className="container">
       <header>
-        <Link to="/menu" className="back">Back</Link>
+        <Link to="/categories" className="back">Back</Link>
         <h1>Spirits</h1>
       </header>
 

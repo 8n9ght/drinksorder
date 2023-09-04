@@ -43,7 +43,7 @@ function Cocktails() {
   return (
     <div className="container">
       <header>
-        <Link to="/menu" className="back">
+        <Link to="/categories" className="back">
           Back
         </Link>
         <h1>Cocktails</h1>
