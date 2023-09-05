@@ -46,7 +46,7 @@ function Cocktails() {
         <Link to="/categories" className="back">
           Back
         </Link>
-        <h1>Cocktails</h1>
+        <h1 className="drinkTitle">Cocktails</h1>
       </header>
 
       <div className="drinks">

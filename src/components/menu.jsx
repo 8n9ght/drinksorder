@@ -71,7 +71,7 @@ const Menu = () => {
             <Zoom>
               <group position={[1.1, 1.1, -.8]}>
               <Model name="menu" />
-              <Html position={[-0.0156, 0.05, 0]} rotation={[.15, 3.83, .1]} transform wrapperClass="embeddedMenu" distanceFactor={.19}>
+              <Html position={[-0.0156, .385, 0]} rotation={[.15, 3.83, .1]} transform wrapperClass="embeddedMenu" distanceFactor={.19}>
                 <iframe title="menu" src="categories"></iframe>
               </Html>
               </group>
